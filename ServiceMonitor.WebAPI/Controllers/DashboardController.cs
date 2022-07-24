@@ -38,5 +38,23 @@ namespace ServiceMonitor.WebAPI.Controllers
 
             return response.ToHttpResponse();
         }
+
+        /// <summary>
+        /// Gets all available registered services 
+        /// </summary>
+        /// <returns></returns>
+        /// /// <response code="200">A list of available services </response>
+        /// <response code="500">If there was an internal server error</response>
+        [HttpGet("Services")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetServicesAsync()
+        {
+            Logger?.LogDebug("'{0}' has been invoked", nameof(GetServicesAsync));
+
+            var response = await Service.GetActiveServicesAsync();
+
+            return response.ToHttpResponse();
+        }
     }
 }

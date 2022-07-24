@@ -61,5 +61,25 @@ namespace ServiceMonitor.Core.Business
 
             return response;
         }
+
+        public async Task<IListResponse<AvailableServices>> GetActiveServicesAsync()
+        {
+            Logger?.LogDebug("'{0}' has been invoked", nameof(GetActiveServicesAsync));
+
+            var response = new ListResponse<AvailableServices>();
+
+            try
+            {
+                response.Model = await DbContext.GetActiveServices().ToListAsync();
+
+                Logger?.LogInformation("The available services were loaded successfully");
+            }
+            catch (Exception ex)
+            {
+                response.SetError(Logger, nameof(GetActiveServicesAsync), ex);
+            }
+
+            return response;
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace ServiceMonitor.Core.Business.Contracts
     public interface IDashboardService : IService
     {
         Task<IListResponse<ServiceWatcherItemInfo>> GetActiveServiceWatcherItemsAsync();
-
         Task<IListResponse<ServiceStatusDetailInfo>> GetServiceStatusesAsync(Guid userID);
+        Task<IListResponse<AvailableServices>> GetActiveServicesAsync();
     }
 }

@@ -74,5 +74,33 @@ namespace ServiceMonitor.Core.Domain.Extensions
 
         public static async Task<ServiceEnvironmentStatus> GetServiceEnvironmentStatusByServiceEnvironmentAsync(this ServiceMonitorDbContext dbContext, ServiceEnvironment entity)
             => await dbContext.ServiceEnvironmentStatuses.FirstOrDefaultAsync(item => item.ServiceEnvironmentID == entity.ID);
+
+        //
+        public static IQueryable<AvailableServices> GetActiveServices(this ServiceMonitorDbContext dbContext)
+        {
+            return
+                from services in dbContext.Services
+                //join service in dbContext.Services
+                //    on serviceEnvironment.ServiceID equals service.ID
+                //join serviceWatcher in dbContext.ServiceWatchers
+                //    on serviceEnvironment.ServiceID equals serviceWatcher.ServiceID
+                //join watcher in dbContext.Watchers
+                //    on serviceWatcher.WatcherID equals watcher.ID
+                //join environment in dbContext.Environments
+                //    on serviceEnvironment.EnvironmentID equals environment.ID
+                select new AvailableServices
+                {
+                    ID = services.ID,
+                    ServiceCategoryID = services.ServiceCategoryID,
+                    ServiceName = services.Name
+                    //,
+                    //Interval = serviceEnvironment.Interval,
+                    //Url = serviceEnvironment.Url,
+                    //Address = serviceEnvironment.Address,
+                    //ConnectionString = serviceEnvironment.ConnectionString,
+                    //TypeName = watcher.AssemblyQualifiedName
+                };
+        }
+
     }
 }
